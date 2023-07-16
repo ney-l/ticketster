@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tk-auth-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tk-auth
+  template:
+    metadata:
+      labels:
+        app: tk-auth
+    spec:
+      containers:
+        - name: tk-auth
+          image: neylanjewar/tk-auth
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tk-auth-srv
+spec:
+  selector:
+    app: tk-auth
+  ports:
+    - name: tk-auth
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
