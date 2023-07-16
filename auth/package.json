@@ -1,9 +1,10 @@
 {
-  "name": "auth",
+  "name": "tk-auth",
   "version": "1.0.0",
   "description": "Auth Microservice for Ticketster App",
   "scripts": {
-    "start": "ts-node-dev src/index.ts"
+    "start": "ts-node-dev src/index.ts",
+    "d:build": "docker build -t neylanjewar/tk-auth ."
   },
   "dependencies": {
     "@types/express": "^4.17.17",
