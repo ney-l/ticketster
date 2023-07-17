@@ -1,6 +1,9 @@
 import express, { type Request, type Response } from 'express';
 import { z } from 'zod';
 import { validate } from '../middlewares';
+import { User } from '@/models/user';
+import { BadRequestError } from '@/errors';
+import { StatusCodes } from 'http-status-codes';
 
 const router = express.Router();
 
@@ -35,9 +38,21 @@ const signupRequestSchema = z.object({
 router.post(
   '/api/users/signup',
   validate(signupRequestSchema),
-  (req: Request, res: Response) => {
+  async (req: Request, res: Response) => {
     const { email, password } = req.body;
-    res.json({ message: 'Sign up', email, password });
+
+    const existingUser = await User.findOne({ email });
+
+    if (existingUser !== null) {
+      throw new BadRequestError('Email in use');
+    }
+
+    // @todo: hash password
+
+    const user = User.build({ email, password });
+    await user.save();
+
+    res.status(StatusCodes.CREATED).json(user);
   },
 );
 
