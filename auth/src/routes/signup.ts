@@ -32,9 +32,13 @@ const signupRequestSchema = z.object({
 /**
  * @route   POST /api/users/signup
  */
-router.post('/api/users/signup', validate(signupRequestSchema), (req: Request, res: Response) => {
-  const { email, password } = req.body;
-  res.json({ message: 'Sign up', email, password });
-});
+router.post(
+  '/api/users/signup',
+  validate(signupRequestSchema),
+  (req: Request, res: Response) => {
+    const { email, password } = req.body;
+    res.json({ message: 'Sign up', email, password });
+  },
+);
 
 export { router as signupRouter };
