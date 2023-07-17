@@ -1,3 +1,4 @@
+import { RequestValidationError } from '@/errors';
 import { type Request, type Response, type NextFunction } from 'express';
 import { ZodError, type AnyZodObject } from 'zod';
 
@@ -13,9 +14,9 @@ export const validate =
       return next();
     } catch (error) {
       if (error instanceof ZodError) {
-        return res.status(400).json(error.issues);
+        return next(new RequestValidationError(error.errors));
       }
-      console.error(error);
-      return res.status(500).json({ message: 'Something went wrong', error });
+
+      return next(error);
     }
   };

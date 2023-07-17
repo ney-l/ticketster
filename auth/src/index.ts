@@ -6,7 +6,7 @@ import {
   signoutRouter,
   signupRouter,
 } from '@/routes';
-import { loggingMiddleware } from './middlewares';
+import { errorHandler, loggingMiddleware } from '@/middlewares';
 import morgan from 'morgan';
 import logger from './logger';
 
@@ -16,6 +16,9 @@ const SERVICE_DISPLAY_NAME = 'Auth Service';
 
 const app = express();
 
+/**
+ * Add middlewares 🛠
+ */
 app.use(json());
 
 app.use(loggingMiddleware);
@@ -32,6 +35,11 @@ app.use(currentUserRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
 app.use(signupRouter);
+
+/**
+ * Global error handler 🚨
+ */
+app.use(errorHandler);
 
 /**
  * Start server 🚀
