@@ -15,6 +15,9 @@ spec:
       containers:
         - name: tk-auth
           image: neylanjewar/tk-auth
+          envFrom:
+            - secretRef:
+                name: secret-env-variables
 ---
 apiVersion: v1
 kind: Service

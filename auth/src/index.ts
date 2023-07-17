@@ -13,9 +13,7 @@ import morgan from 'morgan';
 import logger from './logger';
 import { notFoundHandler } from './middlewares/not-found-handler';
 import { connectDb } from './db';
-
-const PORT = process.env.PORT as string;
-const SERVICE_DISPLAY_NAME = process.env.SERVICE_DISPLAY_NAME as string;
+import env from './environments';
 
 /**
  * Load environment variables 🌳
@@ -57,21 +55,11 @@ app.use(errorHandler);
 /**
  * Start server 🚀
  */
-// const startServer = async () => {
-//   try {
-//     await connectDb();
-
-//     app.listen(PORT, () => {
-//       logger.info(`${SERVICE_DISPLAY_NAME} listening on ${PORT} ⚡️`);
-//     });
-//   } catch (error) {
-//     logger.error(error);
-//   }
-// };
-
 const startServer = () => {
   connectDb()
     .then(() => {
+      const { PORT, SERVICE_DISPLAY_NAME } = env;
+
       app.listen(PORT, () => {
         logger.info(`${SERVICE_DISPLAY_NAME} listening on ${PORT} ⚡️`);
       });
