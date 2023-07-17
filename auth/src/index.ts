@@ -9,6 +9,7 @@ import {
 import { errorHandler, loggingMiddleware } from '@/middlewares';
 import morgan from 'morgan';
 import logger from './logger';
+import { notFoundHandler } from './middlewares/not-found-handler';
 
 const PORT = 3000;
 const SERVICE_NAME = 'tk-auth-srv';
@@ -35,6 +36,11 @@ app.use(currentUserRouter);
 app.use(signinRouter);
 app.use(signoutRouter);
 app.use(signupRouter);
+
+/**
+ * Not found route 🚧
+ */
+app.use(notFoundHandler);
 
 /**
  * Global error handler 🚨
