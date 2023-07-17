@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tk-auth-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tk-auth-mongo
+  template:
+    metadata:
+      labels:
+        app: tk-auth-mongo
+    spec:
+      containers:
+        - name: tk-auth-mongo
+          image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tk-auth-mongo-srv
+spec:
+  selector:
+    app: tk-auth-mongo
+  ports:
+    - name: tk-db
+      protocol: TCP
+      port: 27017
+      targetPort: 27017
