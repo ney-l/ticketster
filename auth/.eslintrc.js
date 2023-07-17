@@ -15,7 +15,7 @@ module.exports = {
   plugins: ['prettier'],
   rules: {
     '@typescript-eslint/semi': 0,
-    'prettier/prettier': 'error',
+    'prettier/prettier': 'off',
     '@typescript-eslint/no-unused-vars': 'warn',
     '@typescript-eslint/no-confusing-void-expression': 'off',
     '@typescript-eslint/no-misused-promises': 'off',
