@@ -14,9 +14,9 @@ export const validate =
       return next();
     } catch (error) {
       if (error instanceof ZodError) {
-        return next(new RequestValidationError(error.errors));
+        throw new RequestValidationError(error.errors);
       }
 
-      return next(error);
+      throw error;
     }
   };
