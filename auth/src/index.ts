@@ -25,7 +25,5 @@ app.use(signupRouter);
  * Start server 🚀
  */
 app.listen(PORT, () => {
-  console.log(
-    `${SERVICE_DISPLAY_NAME} listening on http://${SERVICE_NAME}:${PORT} ⚡️`
-  );
+  console.log(`${SERVICE_DISPLAY_NAME} listening on http://${SERVICE_NAME}:${PORT} ⚡️`);
 });
