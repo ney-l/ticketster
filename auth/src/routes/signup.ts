@@ -52,6 +52,7 @@ router.post(
     const user = User.build({ email, password });
     await user.save();
 
+    // @todo: remove password and other sensitive info from response
     res.status(StatusCodes.CREATED).json(user);
   },
 );

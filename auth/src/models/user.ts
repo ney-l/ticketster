@@ -1,3 +1,4 @@
+import { PasswordManager } from '@/services';
 import mongoose from 'mongoose';
 
 // An interface that describes the properties
@@ -36,6 +37,21 @@ const userSchema = new mongoose.Schema(
   { timestamps: true },
 );
 
+/**
+ * Middleware to hash password before saving
+ */
+userSchema.pre('save', async function (done) {
+  // run only if password is modified
+  if (this.isModified('password')) {
+    const hashedPassword = await PasswordManager.toHash(this.get('password'));
+    this.set('password', hashedPassword);
+  }
+  done();
+});
+
+/**
+ * Helper Method to create a new User in a type-safe way
+ */
 userSchema.statics.build = (attrs: UserAttrs) => {
   return new User(attrs);
 };
