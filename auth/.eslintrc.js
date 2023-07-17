@@ -17,5 +17,7 @@ module.exports = {
     '@typescript-eslint/semi': 0,
     'prettier/prettier': 'error',
     '@typescript-eslint/no-unused-vars': 'warn',
+    '@typescript-eslint/no-confusing-void-expression': 'off',
+    '@typescript-eslint/no-misused-promises': 'off',
   },
 };
