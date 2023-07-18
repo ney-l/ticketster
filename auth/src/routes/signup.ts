@@ -14,11 +14,13 @@ const signupRequestSchema = z.object({
       .string({
         required_error: 'Email is required',
       })
+      .trim()
       .email('Not a valid email'),
     password: z
       .string({
         required_error: 'Password is required',
       })
+      .trim()
       .min(8, 'Password must be between 8 and 20 characters')
       .max(20, 'Password must be between 8 and 20 characters')
       .refine((value) => /[a-zA-Z]/.test(value), {
