@@ -4,6 +4,7 @@ import { validate } from '../middlewares';
 import { User } from '@/models/user';
 import { BadRequestError } from '@/errors';
 import { StatusCodes } from 'http-status-codes';
+import { generateJwt } from '@/services';
 
 const router = express.Router();
 
@@ -47,10 +48,14 @@ router.post(
       throw new BadRequestError('Email in use');
     }
 
-    // @todo: hash password
-
     const user = User.build({ email, password });
     await user.save();
+
+    // Generate JWT
+    const jwt = generateJwt({ id: user.id, email: user.email });
+
+    // Store it on session object
+    req.session = { jwt };
 
     // @todo: remove password and other sensitive info from response
     res.status(StatusCodes.CREATED).json(user);

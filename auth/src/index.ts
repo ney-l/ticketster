@@ -14,6 +14,7 @@ import logger from './logger';
 import { notFoundHandler } from './middlewares/not-found-handler';
 import { connectDb } from './db';
 import env from './environments';
+import cookieSession from 'cookie-session';
 
 /**
  * Load environment variables 🌳
@@ -21,6 +22,11 @@ import env from './environments';
 dotenv.config();
 
 const app = express();
+
+/**
+ * Trust proxy 🤝
+ */
+app.set('trust proxy', true);
 
 /**
  * Add middlewares 🛠
@@ -33,6 +39,11 @@ app.use(
     stream: { write: (message) => logger.info(message.trim()) },
   }),
 );
+
+/**
+ * Add cookie session middleware 🍪
+ */
+app.use(cookieSession({ signed: false, secure: true }));
 
 /**
  * Routes 🚏
