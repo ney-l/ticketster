@@ -1,20 +1,16 @@
-import express from 'express';
+import express, { type Request } from 'express';
 import { BadRequestError } from '@/errors';
-import { verifyJwt } from '@/services';
+import { attachCurrentUser } from '@/middlewares';
 
 const router = express.Router();
 
 /**
  * @route   GET /api/users/current
  */
-router.get('/api/users/current', (req, res) => {
-  if (!req.session?.jwt) {
-    throw new BadRequestError('Invalid credentials');
-  }
-
+router.get('/api/users/current', attachCurrentUser, (req: Request, res) => {
   try {
-    const payload = verifyJwt(req.session.jwt);
-    return res.json({ currentUser: payload });
+    const { currentUser = null } = req;
+    return res.json({ currentUser });
   } catch (error) {
     throw new BadRequestError('Invalid credentials');
   }
