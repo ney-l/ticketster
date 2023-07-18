@@ -22,5 +22,6 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/array-type': 'off',
     '@typescript-eslint/method-signature-style': 'off',
+    '@typescript-eslint/strict-boolean-expressions': 'off',
   },
 };
