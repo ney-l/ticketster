@@ -8,10 +8,13 @@ import {
   signoutRouter,
   signupRouter,
 } from '@/routes';
-import { errorHandler, loggingMiddleware } from '@/middlewares';
+import {
+  errorHandler,
+  loggingMiddleware,
+  notFoundHandler,
+} from '@/middlewares';
 import morgan from 'morgan';
 import logger from './logger';
-import { notFoundHandler } from './middlewares/not-found-handler';
 import { connectDb } from './db';
 import env from './environments';
 import cookieSession from 'cookie-session';

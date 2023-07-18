@@ -1,2 +1,2 @@
-export * from './password-manager';
 export * from './jwt-manager';
+export * from './password-manager';
