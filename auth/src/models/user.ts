@@ -34,7 +34,17 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
   },
-  { timestamps: true },
+  {
+    timestamps: true,
+    toJSON: {
+      transform(doc, returnedDoc) {
+        returnedDoc.id = returnedDoc._id;
+        delete returnedDoc._id;
+        delete returnedDoc.password;
+        delete returnedDoc.__v;
+      },
+    },
+  },
 );
 
 /**

@@ -57,7 +57,6 @@ router.post(
     // Store it on session object
     req.session = { jwt };
 
-    // @todo: remove password and other sensitive info from response
     res.status(StatusCodes.CREATED).json(user);
   },
 );
