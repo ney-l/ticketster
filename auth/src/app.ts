@@ -44,7 +44,9 @@ app.use(
 /**
  * Add cookie session middleware 🍪
  */
-app.use(cookieSession({ signed: false, secure: true }));
+app.use(
+  cookieSession({ signed: false, secure: process.env.NODE_ENV !== 'test' }),
+);
 
 /**
  * Routes 🚏
