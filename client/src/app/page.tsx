@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import Image from 'next/image';
 
 export default function Home() {
   return (
@@ -17,8 +17,8 @@ export default function Home() {
           >
             By{' '}
             <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
+              src="/logo.png"
+              alt="Tickester Logo"
               className="dark:invert"
               width={100}
               height={24}
@@ -109,5 +109,5 @@ export default function Home() {
         </a>
       </div>
     </main>
-  )
+  );
 }
