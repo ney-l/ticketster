@@ -17,3 +17,10 @@ spec:
                 name: tk-auth-srv
                 port:
                   number: 3000
+          - path: /?(.*) # CATCH ALL ROUTE
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: tk-client-srv
+                port:
+                  number: 3000

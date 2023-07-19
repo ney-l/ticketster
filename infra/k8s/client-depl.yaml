@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tk-client-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tk-client
+  template:
+    metadata:
+      labels:
+        app: tk-client
+    spec:
+      containers:
+        - name: tk-client
+          image: neylanjewar/tk-client
+          envFrom:
+            - secretRef:
+                name: client-secret-env-variables
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tk-client-srv
+spec:
+  selector:
+    app: tk-client
+  ports:
+    - name: tk-client
+      protocol: TCP
+      port: 3000
+      targetPort: 3000
