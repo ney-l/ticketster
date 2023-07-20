@@ -11,6 +11,9 @@ RUN npm ci
 COPY --link src ./src
 COPY --link public ./public
 COPY --link next.config.js .
+COPY --link tailwind.config.js .
+COPY --link postcss.config.js .
+COPY --link components.json .
 COPY --link tsconfig.json .
 
 # Next.js collects completely anonymous telemetry data about general usage.
