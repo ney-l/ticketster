@@ -1,5 +1,6 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
@@ -43,6 +44,7 @@ export const signupFormSchema = z.object({
 });
 
 export default function Signup() {
+  const router = useRouter();
   const form = useForm<z.infer<typeof signupFormSchema>>({
     resolver: zodResolver(signupFormSchema),
     defaultValues: {
@@ -58,9 +60,10 @@ export default function Signup() {
       password: form.getValues('password'),
     },
     successMessage: 'Sign up successful! 🎉',
+    onSuccess: () => router.push('/'),
   });
 
-  const onSubmit = async (credentials: z.infer<typeof signupFormSchema>) => {
+  const onSubmit = () => {
     sendRequest();
   };
 

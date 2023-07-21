@@ -7,6 +7,7 @@ interface RequestProps {
   method: 'get' | 'post' | 'put' | 'delete';
   body?: any;
   successMessage?: string;
+  onSuccess?: (data: any) => void;
 }
 
 export const useRequest = ({
@@ -14,6 +15,7 @@ export const useRequest = ({
   method,
   body,
   successMessage,
+  onSuccess,
 }: RequestProps) => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
@@ -28,6 +30,10 @@ export const useRequest = ({
         title: successMessage ?? 'Success 🎉',
       });
       setData(data);
+
+      if (onSuccess) {
+        onSuccess(data);
+      }
     } catch (err) {
       const errors = parseErrors(err);
 
