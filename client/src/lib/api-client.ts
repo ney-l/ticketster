@@ -15,7 +15,7 @@ export const buildApiClient = (cookieStore: ReadonlyRequestCookies) => {
     });
   } else {
     // runs on the browser
-    return axios.create({ baseURL: '/' });
+    return axios.create({ baseURL: '/', withCredentials: true });
   }
 };
 
