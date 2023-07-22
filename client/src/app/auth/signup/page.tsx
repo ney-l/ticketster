@@ -15,8 +15,7 @@ import {
   Input,
 } from '@/components/ui';
 import { useRequest } from '@/hooks';
-
-const SIGNUP_API_ENDPOINT = '/api/users/signup';
+import { API_ENDPOINTS } from '@/lib';
 
 export const signupFormSchema = z.object({
   email: z
@@ -54,7 +53,7 @@ export default function Signup() {
   });
   const { sendRequest } = useRequest({
     method: 'post',
-    url: SIGNUP_API_ENDPOINT,
+    url: API_ENDPOINTS.SIGN_UP,
     body: {
       email: form.getValues('email'),
       password: form.getValues('password'),
