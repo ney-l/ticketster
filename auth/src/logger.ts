@@ -31,9 +31,14 @@ const logger = winston.createLogger({
   format: winston.format.combine(
     winston.format.colorize({ all: true }),
     winston.format.timestamp(),
-    winston.format.printf(({ message }) => {
-      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      return `[${Date.now()}] ${level.toUpperCase()}: ${message}`;
+    winston.format.printf(({ message }: { message: string }) => {
+      const date = new Date();
+      const formattedDate = new Intl.DateTimeFormat('en-DE', {
+        dateStyle: 'short',
+        timeStyle: 'long',
+      }).format(date);
+
+      return `[${formattedDate}] ${level.toUpperCase()}: ${message}`;
     }),
   ),
 });
