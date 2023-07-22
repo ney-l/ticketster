@@ -1,6 +1,7 @@
-import { useToast } from '@/components/ui';
 import axios from 'axios';
 import { useState } from 'react';
+import { useToast } from '@/components/ui';
+import { ErrorResponse, parseErrors } from '@/lib';
 
 interface RequestProps {
   url: string;
@@ -52,21 +53,4 @@ export const useRequest = ({
   };
 
   return { sendRequest, isLoading, errors, data };
-};
-
-export interface ErrorResponse {
-  message: string;
-}
-
-const parseErrors = (error: unknown): ErrorResponse[] => {
-  if (axios.isAxiosError(error)) {
-    return error.response?.data.errors;
-  }
-
-  if (error instanceof Error) {
-    return [{ message: error.message }];
-  }
-
-  const FALLBACK_ERROR = 'Something went wrong';
-  return [{ message: FALLBACK_ERROR }];
 };
