@@ -9,6 +9,7 @@ interface RequestProps {
   body?: any;
   successMessage?: string;
   onSuccess?: (data: any) => void;
+  showSuccessToast?: boolean;
 }
 
 export const useRequest = ({
@@ -17,6 +18,7 @@ export const useRequest = ({
   body,
   successMessage,
   onSuccess,
+  showSuccessToast = true,
 }: RequestProps) => {
   const { toast } = useToast();
   const [isLoading, setIsLoading] = useState(false);
@@ -27,9 +29,13 @@ export const useRequest = ({
     try {
       setIsLoading(true);
       const { data } = await axios[method](url, body);
-      toast({
-        title: successMessage ?? 'Success 🎉',
-      });
+
+      if (showSuccessToast) {
+        toast({
+          title: successMessage ?? 'Success 🎉',
+        });
+      }
+
       setData(data);
 
       if (onSuccess) {
