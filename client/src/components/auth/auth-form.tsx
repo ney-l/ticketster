@@ -63,7 +63,11 @@ export function AuthForm() {
       password: form.getValues('password').trim(),
     },
     successMessage: isSignup ? 'Sign up successful! 🎉' : 'Signed in!',
-    onSuccess: () => router.push('/'),
+    onSuccess: () => {
+      router.refresh();
+      router.push('/');
+    },
+    showSuccessToast: isSignup,
   });
 
   const onSubmit = () => {
