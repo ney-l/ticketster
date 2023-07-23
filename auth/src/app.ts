@@ -12,7 +12,7 @@ import {
   errorHandler,
   loggingMiddleware,
   notFoundHandler,
-} from '@/middlewares';
+} from '@ticketster/common';
 import morgan from 'morgan';
 import logger from './logger';
 import cookieSession from 'cookie-session';

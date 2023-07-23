@@ -1,8 +1,7 @@
 import express, { type Request, type Response } from 'express';
 import { z } from 'zod';
-import { validate } from '../middlewares';
+import { validate, BadRequestError } from '@ticketster/common';
 import { User } from '@/models/user';
-import { BadRequestError } from '@/errors';
 import { StatusCodes } from 'http-status-codes';
 import { generateJwt } from '@/services';
 

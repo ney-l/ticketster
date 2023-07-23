@@ -6,8 +6,7 @@ import express, {
 import { z } from 'zod';
 import { StatusCodes } from 'http-status-codes';
 
-import { BadRequestError } from '@/errors';
-import { validate } from '@/middlewares';
+import { BadRequestError, validate } from '@ticketster/common';
 import { User } from '@/models/user';
 import { PasswordManager, generateJwt } from '@/services';
 

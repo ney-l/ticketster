@@ -1,5 +1,5 @@
 import express, { type Request } from 'express';
-import { attachCurrentUser } from '@/middlewares';
+import { attachCurrentUser } from '@ticketster/common';
 
 const router = express.Router();
 

@@ -28,3 +28,13 @@ Follow the steps listed here for a guide on how to map a hostname to an IP addre
 After configuring the host, kill the Skaffold task if it's already running and restart it.
 
 Then you should be able to open `http://ticketster.com/api/users/current` in the browser and see a response from the Auth service
+
+## Start Shell inside a pod
+
+```sh
+# Get the pod id
+kubectl get pods
+
+# start a shell inside the pod
+kubectl exec -it <pod_id> sh
+```
