@@ -47,7 +47,7 @@ app.use(
 app.use(
   cookieSession({
     signed: false,
-    secure: !['development', 'test'].includes(process.env.NODE_ENV ?? ''),
+    secure: !['', 'development', 'test'].includes(process.env.NODE_ENV ?? ''),
   }),
 );
 
