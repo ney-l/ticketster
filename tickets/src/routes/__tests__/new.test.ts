@@ -18,7 +18,7 @@ test('app has a route handler listening at /api/tickets for POST requests', asyn
 test('it can only be accessed if the user is signed in', async () => {
   const response = await request(app).post(TICKETS_ENDPOINT).send({});
 
-  expect(response.status).toBeGreaterThanOrEqual(400);
+  expect(response.status).toBe(401);
 });
 
 test('it returns a status lower than 400 if the user is signed in', async () => {
