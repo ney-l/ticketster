@@ -3,12 +3,14 @@ import 'express-async-errors';
 import dotenv from 'dotenv';
 import { json } from 'body-parser';
 import {
+  attachCurrentUser,
   configureMorgan,
   errorHandler,
   loggingMiddleware,
   notFoundHandler,
 } from '@ticketster/common';
 import cookieSession from 'cookie-session';
+import { createTicketRouter } from '@/routes';
 
 /**
  * Load environment variables 🌳
@@ -41,8 +43,14 @@ app.use(
 );
 
 /**
+ * Attach current user middleware 🎟
+ */
+app.use(attachCurrentUser);
+
+/**
  * Routes 🚏
  */
+app.use(createTicketRouter);
 
 /**
  * Not found route 🚧
