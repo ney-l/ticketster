@@ -11,20 +11,13 @@ const TICKETS_ENDPOINT = '/api/tickets';
  * @desc    Get a ticket
  */
 router.get(`${TICKETS_ENDPOINT}/:id`, async (req: Request, res: Response) => {
-  try {
-    const ticket = await Ticket.findById(req.params.id);
+  const ticket = await Ticket.findById(req.params.id);
 
-    if (ticket === null) {
-      throw new NotFoundError();
-    }
-
-    res.status(200).json(ticket);
-  } catch (error) {
-    if (error instanceof Error && error.name === 'CastError') {
-      throw new NotFoundError();
-    }
-    throw error;
+  if (ticket === null) {
+    throw new NotFoundError();
   }
+
+  res.status(200).json(ticket);
 });
 
 export { router as getTicketsRouter };
