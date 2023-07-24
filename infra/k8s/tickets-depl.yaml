@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tk-tickets-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tk-tickets
+  template:
+    metadata:
+      labels:
+        app: tk-tickets
+    spec:
+      containers:
+        - name: tk-tickets
+          image: neylanjewar/tk-tickets
+          envFrom:
+            - secretRef:
+                name: tickets-secret-env-variables
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tk-tickets-srv
+spec:
+  selector:
+    app: tk-tickets
+  ports:
+    - name: tk-tickets
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

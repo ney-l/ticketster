@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tk-tickets-mongo-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tk-tickets-mongo
+  template:
+    metadata:
+      labels:
+        app: tk-tickets-mongo
+    spec:
+      containers:
+        - name: tk-tickets-mongo
+          image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tk-tickets-mongo-srv
+spec:
+  selector:
+    app: tk-tickets-mongo
+  ports:
+    - name: tk-db
+      protocol: TCP
+      port: 27017
+      targetPort: 27017

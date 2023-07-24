@@ -1,10 +1,11 @@
 {
-  "name": "tk-auth",
+  "name": "tk-tickets",
   "version": "1.0.0",
-  "description": "Auth Microservice for Ticketster App",
+  "description": "Ticket Microservice for Ticketster App",
   "scripts": {
     "start": "ts-node-dev -r tsconfig-paths/register src/index.ts",
-    "docker:build": "docker build -t neylanjewar/tk-auth .",
+    "docker:build": "docker build -t neylanjewar/tk-tickets .",
+    "docker:push": "docker push neylanjewar/tk-tickets",
     "lint": "eslint src/**/*.ts",
     "format:check": "prettier src",
     "format:fix": "prettier src --write",

@@ -3,16 +3,10 @@ import 'express-async-errors';
 import dotenv from 'dotenv';
 import { json } from 'body-parser';
 import {
-  currentUserRouter,
-  signinRouter,
-  signoutRouter,
-  signupRouter,
-} from '@/routes';
-import {
+  configureMorgan,
   errorHandler,
   loggingMiddleware,
   notFoundHandler,
-  configureMorgan,
 } from '@ticketster/common';
 import cookieSession from 'cookie-session';
 
@@ -49,10 +43,6 @@ app.use(
 /**
  * Routes 🚏
  */
-app.use(currentUserRouter);
-app.use(signinRouter);
-app.use(signoutRouter);
-app.use(signupRouter);
 
 /**
  * Not found route 🚧

@@ -7,6 +7,7 @@ build:
   local:
     push: false
   artifacts:
+    # Auth service
     - image: neylanjewar/tk-auth
       context: auth
       docker:
@@ -15,6 +16,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+    # Client service
     - image: neylanjewar/tk-client
       context: client
       docker:
@@ -22,4 +24,13 @@ build:
       sync:
         manual:
           - src: 'src/**/*.{ts,tsx,css}'
+            dest: .
+    # Tickets service
+    - image: neylanjewar/tk-tickets
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: 'src/**/*.ts'
             dest: .
