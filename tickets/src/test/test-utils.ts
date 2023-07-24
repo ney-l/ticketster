@@ -1,16 +1,19 @@
 import jwt from 'jsonwebtoken';
 import env from '@/environments';
+import mongoose from 'mongoose';
 
 const VALID_EMAIL = 'test@test.com';
-const RANDOM_ID = '1234';
 
 const generateJwt = (payload: object): string => {
   return jwt.sign(payload, env.JWT_SECRET);
 };
 
 export const getCookie = () => {
+  // Generate a random object id
+  const id = new mongoose.Types.ObjectId().toHexString();
+
   // build a JWT payload. { id, email }
-  const payload = { id: RANDOM_ID, email: VALID_EMAIL };
+  const payload = { id, email: VALID_EMAIL };
 
   // create the JWT
   const token = generateJwt(payload);

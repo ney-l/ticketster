@@ -14,6 +14,7 @@ import {
   createTicketRouter,
   getTicketsRouter,
   listTicketsRouter,
+  updateTicketRouter,
 } from '@/routes';
 
 /**
@@ -57,6 +58,7 @@ app.use(attachCurrentUser);
 app.use(createTicketRouter);
 app.use(getTicketsRouter);
 app.use(listTicketsRouter);
+app.use(updateTicketRouter);
 
 /**
  * Not found route 🚧

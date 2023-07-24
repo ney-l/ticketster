@@ -7,7 +7,7 @@ const router = express.Router();
 
 const TICKETS_ENDPOINT = '/api/tickets';
 
-const createTicketRequestSchema = z.object({
+export const ticketRequestSchema = z.object({
   body: z.object({
     title: z
       .string({ required_error: 'Title is required.' })
@@ -29,7 +29,7 @@ const createTicketRequestSchema = z.object({
 router.post(
   TICKETS_ENDPOINT,
   requireAuth,
-  validateRequest(createTicketRequestSchema),
+  validateRequest(ticketRequestSchema),
   async (req: Request, res: Response) => {
     const { title, price } = req.body;
 
