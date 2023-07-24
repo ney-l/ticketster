@@ -22,6 +22,10 @@ const createTicketRequestSchema = z.object({
   }),
 });
 
+/**
+ * @route   POST /api/tickets
+ * @desc    Create a ticket
+ */
 router.post(
   TICKETS_ENDPOINT,
   requireAuth,
