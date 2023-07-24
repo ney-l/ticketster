@@ -1,7 +1,7 @@
+import { logger } from '@ticketster/common';
 import { app } from './app';
 import { connectDb } from './db';
 import env from './environments';
-import logger from './logger';
 
 /**
  * Connect to DB and start the server 🚀

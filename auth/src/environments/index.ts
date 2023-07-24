@@ -1,4 +1,4 @@
-import logger from '@/logger';
+import { logger } from '@ticketster/common';
 import { z } from 'zod';
 
 const EnvironmentSchema = z.object({

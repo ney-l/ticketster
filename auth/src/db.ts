@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import logger from './logger';
+import { logger } from '@ticketster/common';
 import env from './environments';
 
 export const connectDb = async () => {

@@ -12,9 +12,8 @@ import {
   errorHandler,
   loggingMiddleware,
   notFoundHandler,
+  configuredMorgan,
 } from '@ticketster/common';
-import morgan from 'morgan';
-import logger from './logger';
 import cookieSession from 'cookie-session';
 
 /**
@@ -35,11 +34,7 @@ app.set('trust proxy', true);
 app.use(json());
 
 app.use(loggingMiddleware);
-app.use(
-  morgan('combined', {
-    stream: { write: (message) => logger.info(message.trim()) },
-  }),
-);
+app.use(configuredMorgan());
 
 /**
  * Add cookie session middleware 🍪
