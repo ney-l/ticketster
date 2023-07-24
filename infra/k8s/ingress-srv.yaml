@@ -10,6 +10,7 @@ spec:
     - host: ticketster.com
       http:
         paths:
+          # Auth Service Routes
           - path: /api/users/?(.*)
             pathType: ImplementationSpecific
             backend:
@@ -17,7 +18,16 @@ spec:
                 name: tk-auth-srv
                 port:
                   number: 3000
-          - path: /?(.*) # CATCH ALL ROUTE
+          # Tickets Service Routes
+          - path: /api/tickets/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: tk-tickets-srv
+                port:
+                  number: 3000
+          # Catch All Route
+          - path: /?(.*)
             pathType: ImplementationSpecific
             backend:
               service:
