@@ -69,3 +69,12 @@ kubectl delete secret <service-name>-secret-env-variables
 
 kubectl create secret generic <service-name>-secret-env-variables --from-env-file=.env
 ```
+
+## Set up Port Forwarding
+
+```sh
+kubectl port-forward <pod-id> <port>:<port-on-the-pod>
+
+# Example
+kubectl port-forward tk-nats-depl-7f59869bb4-55qwj 4222:4222
+```

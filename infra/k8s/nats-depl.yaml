@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tk-nats-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tk-nats
+  template:
+    metadata:
+      labels:
+        app: tk-nats
+    spec:
+      containers:
+        - name: tk-nats
+          image: nats-streaming:0.17.0
+          args:
+            [
+              '-p',
+              '4222',
+              '-m',
+              '8222',
+              '-hbi',
+              '5s',
+              '-hbt',
+              '5s',
+              '-hbf',
+              '2',
+              '-SD',
+              '-cid',
+              'ticketster',
+            ]
+          resources:
+            limits:
+              memory: '128Mi'
+              cpu: '500m'
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tk-nats-srv
+spec:
+  selector:
+    app: tk-nats
+  ports:
+    - name: tk-client
+      protocol: TCP
+      port: 4222
+      targetPort: 4222
+    - name: monitoring
+      protocol: TCP
+      port: 8222
+      targetPort: 8222
