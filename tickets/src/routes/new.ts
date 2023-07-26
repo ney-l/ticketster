@@ -2,6 +2,8 @@ import express, { type Request, type Response } from 'express';
 import { z } from 'zod';
 import { requireAuth, validate as validateRequest } from '@ticketster/common';
 import { Ticket } from '@/models/ticket';
+import { TicketCreatedPublisher } from '@/events/publishers';
+import { natsWrapper } from '@/nats-wrapper';
 
 const router = express.Router();
 
@@ -37,6 +39,15 @@ router.post(
     const ticket = Ticket.build({ title, price, userId: req.currentUser!.id });
 
     await ticket.save();
+
+    // Publish Ticket Created Event
+    const ticketPublisher = new TicketCreatedPublisher(natsWrapper.client);
+    await ticketPublisher.publish({
+      id: ticket.id,
+      title: ticket.title,
+      price: ticket.price,
+      userId: ticket.userId,
+    });
 
     res.status(201).json(ticket);
   },
