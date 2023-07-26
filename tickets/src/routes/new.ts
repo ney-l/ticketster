@@ -40,9 +40,8 @@ router.post(
 
     await ticket.save();
 
-    // Publish Ticket Created Event
-    const ticketPublisher = new TicketCreatedPublisher(natsWrapper.client);
-    await ticketPublisher.publish({
+    // Publish Ticket Created Event 📣
+    await new TicketCreatedPublisher(natsWrapper.client).publish({
       id: ticket.id,
       title: ticket.title,
       price: ticket.price,
