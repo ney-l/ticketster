@@ -6,6 +6,9 @@ const EnvironmentSchema = z.object({
   PORT: z.string().transform((val) => parseInt(val, 10)),
   SERVICE_DISPLAY_NAME: z.string(),
   JWT_SECRET: z.string(),
+  NATS_CLUSTER_ID: z.string(),
+  NATS_CLIENT_ID: z.string(),
+  NATS_URL: z.string(),
 });
 
 export type Environment = z.infer<typeof EnvironmentSchema>;
