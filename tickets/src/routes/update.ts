@@ -8,6 +8,8 @@ import {
   validate,
 } from '@ticketster/common';
 import { ticketRequestSchema } from './new';
+import { TicketUpdatedPublisher } from '@/events/publishers';
+import { natsWrapper } from '@/nats-wrapper';
 
 const router = express.Router();
 
@@ -34,6 +36,14 @@ router.put(
     const { title, price } = req.body;
     ticket.set({ title, price });
     await ticket.save();
+
+    // Publish Ticket Updated Event 📣
+    await new TicketUpdatedPublisher(natsWrapper.client).publish({
+      id: ticket.id,
+      title: ticket.title,
+      price: ticket.price,
+      userId: ticket.userId,
+    });
 
     return res.status(200).json(ticket);
   },
