@@ -35,6 +35,7 @@ export const natsWrapper = new NatsWrapper();
 
 export const connectNats = async () => {
   const { NATS_CLUSTER_ID, NATS_CLIENT_ID, NATS_URL } = env;
+  logger.info(`NATS_CLUSTER_ID: ${NATS_CLUSTER_ID}`);
 
   await natsWrapper.connect(NATS_CLUSTER_ID, NATS_CLIENT_ID, NATS_URL);
 };

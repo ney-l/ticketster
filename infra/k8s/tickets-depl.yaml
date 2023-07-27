@@ -18,6 +18,11 @@ spec:
           envFrom:
             - secretRef:
                 name: tickets-secret-env-variables
+          env:
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
 ---
 apiVersion: v1
 kind: Service
