@@ -1,13 +1,18 @@
-import request from 'supertest';
+/* eslint-disable import/first */
+jest.mock('@/nats-wrapper.ts');
 
+import request from 'supertest';
 import { app } from '@/app';
 import { getCookie } from '@/test/test-utils';
 import { Ticket } from '@/models';
+import { natsWrapper } from '@/nats-wrapper';
 
 const TICKETS_ENDPOINT = '/api/tickets';
 const VALID_PRICE = 10;
 const VALID_TITLE = 'some title';
 const INVALID_PRICE = -10;
+
+beforeEach(() => jest.clearAllMocks());
 
 test('app has a route handler listening at /api/tickets for POST requests', async () => {
   const response = await request(app).post(TICKETS_ENDPOINT).send({});
@@ -70,4 +75,15 @@ test('creates a ticket with valid inputs', async () => {
 
   const ticketsAfter = await Ticket.find({});
   expect(ticketsAfter.length).toEqual(1);
+});
+
+it('publishes an event on successful ticket creation', async () => {
+  const cookie = getCookie();
+  await request(app)
+    .post(TICKETS_ENDPOINT)
+    .set('Cookie', cookie)
+    .send({ title: VALID_TITLE, price: VALID_PRICE })
+    .expect(201);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalledTimes(1);
 });

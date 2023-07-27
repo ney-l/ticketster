@@ -1,3 +1,5 @@
+/* eslint-disable import/first */
+jest.mock('@/nats-wrapper');
 import request from 'supertest';
 
 import { app } from '@/app';
@@ -6,6 +8,8 @@ import { getCookie } from '@/test/test-utils';
 const TICKETS_ENDPOINT = '/api/tickets';
 const VALID_PRICE = 10;
 const VALID_TITLE = 'some title';
+
+beforeEach(() => jest.clearAllMocks());
 
 test('it returns a 404 if the ticket is not found', async () => {
   const INVALID_ID = 'invalid-id';
