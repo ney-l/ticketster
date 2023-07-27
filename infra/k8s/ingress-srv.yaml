@@ -26,6 +26,14 @@ spec:
                 name: tk-tickets-srv
                 port:
                   number: 3000
+          # Orders Service Routes
+          - path: /api/orders/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: tk-orders-srv
+                port:
+                  number: 3000
           # Catch All Route
           - path: /?(.*)
             pathType: ImplementationSpecific

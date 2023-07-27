@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tk-orders-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tk-orders
+  template:
+    metadata:
+      labels:
+        app: tk-orders
+    spec:
+      containers:
+        - name: tk-orders
+          image: neylanjewar/tk-orders
+          envFrom:
+            - secretRef:
+                name: orders-secret-env-variables
+          env:
+            - name: NATS_CLIENT_ID
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: tk-orders-srv
+spec:
+  selector:
+    app: tk-orders
+  ports:
+    - name: tk-orders
+      protocol: TCP
+      port: 3000
+      targetPort: 3000

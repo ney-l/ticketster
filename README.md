@@ -78,3 +78,12 @@ kubectl port-forward <pod-id> <port>:<port-on-the-pod>
 # Example
 kubectl port-forward tk-nats-depl-7f59869bb4-55qwj 4222:4222
 ```
+
+## Some guidelines for adding a new Micro service
+
+- Duplicate an existing microservice for a quick skaffold.
+- Install dependencies.
+- Build a docker image of the new microservice.
+- Create a Kubernetes deployment file.
+- Set up file sync options in the `skaffold.yaml` file
+- Set up routing rules in the ingress service.
