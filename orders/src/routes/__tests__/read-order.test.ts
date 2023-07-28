@@ -43,3 +43,47 @@ it('fetches orders for a particular user', async () => {
   expect(orders[1].id).toEqual(user2order2.id);
   expect(orders[1].ticket.id).toEqual(ticket3.id);
 });
+
+it('fetches the order', async () => {
+  const cookie = getCookie();
+
+  // Create a ticket
+  const ticket = await buildTicket();
+
+  // create an order with this ticket
+  const { body: order } = await request(app)
+    .post('/api/orders')
+    .set('Cookie', cookie)
+    .send({ ticketId: ticket.id })
+    .expect(201);
+
+  // Make request to fetch the order
+  const { body: fetchedOrder } = await request(app)
+    .get(`/api/orders/${order.id as string}`)
+    .set('Cookie', cookie)
+    .send()
+    .expect(200);
+
+  expect(fetchedOrder.id).toEqual(order.id);
+});
+
+it('returns an error if one user tries to fetch another users order', async () => {
+  const cookie = getCookie();
+
+  // Create a ticket
+  const ticket = await buildTicket();
+
+  // create an order with this ticket
+  const { body: order } = await request(app)
+    .post('/api/orders')
+    .set('Cookie', cookie)
+    .send({ ticketId: ticket.id })
+    .expect(201);
+
+  // Make request to fetch the order using another user
+  await request(app)
+    .get(`/api/orders/${order.id as string}`)
+    .set('Cookie', getCookie())
+    .send()
+    .expect(401);
+});
