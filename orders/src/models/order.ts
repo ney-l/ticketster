@@ -1,22 +1,33 @@
 import mongoose from 'mongoose';
 import { OrderStatus } from '@ticketster/common';
+import { type TicketDoc } from './ticket';
 
+/**
+ * An interface that describes the properties
+ */
 interface OrderAttrs {
   userId: string;
   status: OrderStatus;
   expiresAt: Date;
-  // ticket: TicketDoc; // TODO: add ticket model
+  ticket: TicketDoc;
 }
 
+/**
+ * An interface that describes the properties on Order Document
+ * when we query a single order
+ */
 interface OrderDoc extends mongoose.Document {
   userId: string;
   status: OrderStatus;
   expiresAt: Date;
-  // ticket: TicketDoc; // TODO
+  ticket: TicketDoc;
   createdAt: Date;
   updatedAt: Date;
 }
 
+/**
+ * An interface that describes the properties on Order Model
+ */
 interface OrderModel extends mongoose.Model<OrderDoc> {
   build(attrs: OrderAttrs): OrderDoc;
 }
@@ -52,6 +63,9 @@ const orderSchema = new mongoose.Schema(
   },
 );
 
+/**
+ * A helper method to create a new order in a type-safe way
+ */
 orderSchema.statics.build = (attrs: OrderAttrs) => {
   return new Order(attrs);
 };
