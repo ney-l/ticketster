@@ -1,7 +1,10 @@
 import { MongoMemoryServer } from 'mongodb-memory-server';
 import mongoose from 'mongoose';
+import { TestHelpers } from '@ticketster/common';
 
 let mongo: any;
+
+TestHelpers.setupNatsClientId();
 
 beforeAll(async () => {
   mongo = await MongoMemoryServer.create();
