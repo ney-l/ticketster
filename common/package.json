@@ -1,6 +1,6 @@
 {
   "name": "@ticketster/common",
-  "version": "1.5.1",
+  "version": "1.6.0",
   "description": "",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
@@ -12,7 +12,10 @@
     "clean": "del ./build/*",
     "prebuild": "npm run clean",
     "build": "tsc && tsc-alias",
-    "pub": "npm run build && npm publish"
+    "build-and-publish": "npm run build && npm publish",
+    "pub:minor": "npm version minor && npm run build-and-publish",
+    "pub:patch": "npm version patch && npm run build-and-publish",
+    "pub:major": "npm version major && npm run build-and-publish"
   },
   "keywords": [],
   "author": "",
