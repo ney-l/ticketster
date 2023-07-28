@@ -10,6 +10,12 @@ import {
   notFoundHandler,
 } from '@ticketster/common';
 import cookieSession from 'cookie-session';
+import {
+  createOrderRouter,
+  deleteOrderRouter,
+  readOrderRouter,
+  updateOrderRouter,
+} from '@/routes';
 
 /**
  * Load environment variables 🌳
@@ -49,6 +55,10 @@ app.use(attachCurrentUser);
 /**
  * Routes 🚏
  */
+app.use(createOrderRouter);
+app.use(deleteOrderRouter);
+app.use(readOrderRouter);
+app.use(updateOrderRouter);
 
 /**
  * Not found route 🚧
