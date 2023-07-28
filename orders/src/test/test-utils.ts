@@ -1,6 +1,9 @@
 import jwt from 'jsonwebtoken';
 import env from '@/environments';
 import mongoose from 'mongoose';
+import { faker } from '@faker-js/faker';
+
+import { Ticket } from '@/models';
 
 const VALID_EMAIL = 'test@test.com';
 
@@ -29,4 +32,13 @@ export const getCookie = () => {
 
   // return a string that is the cookie with the encoded data
   return [`session=${base64}`];
+};
+
+export const buildTicket = async () => {
+  const ticket = Ticket.build({
+    title: faker.lorem.words(3),
+    price: Math.floor(Math.random() * 100),
+  });
+  await ticket.save();
+  return ticket;
 };
