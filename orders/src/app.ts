@@ -12,7 +12,6 @@ import {
 import cookieSession from 'cookie-session';
 import {
   createOrderRouter,
-  deleteOrderRouter,
   readOrderRouter,
   updateOrderRouter,
 } from '@/routes';
@@ -56,7 +55,6 @@ app.use(attachCurrentUser);
  * Routes 🚏
  */
 app.use(createOrderRouter);
-app.use(deleteOrderRouter);
 app.use(readOrderRouter);
 app.use(updateOrderRouter);
 
