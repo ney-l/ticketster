@@ -30,7 +30,7 @@ router.post(
     const ticket = await Ticket.findById(ticketId);
 
     if (!ticket) {
-      throw new NotFoundError();
+      throw new BadRequestError('Invalid Ticket ID.');
     }
 
     // Make sure that this ticket is not already reserved
