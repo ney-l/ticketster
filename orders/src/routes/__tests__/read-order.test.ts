@@ -1,3 +1,6 @@
+/* eslint-disable import/first */
+jest.mock('@/nats-wrapper');
+
 import request from 'supertest';
 import { app } from '@/app';
 import { buildTicket, getCookie } from '@/test';

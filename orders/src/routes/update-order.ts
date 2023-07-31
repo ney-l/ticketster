@@ -7,6 +7,8 @@ import {
 } from '@ticketster/common';
 import { ORDERS_API_ENDPOINT } from '@/constants';
 import { Order, OrderStatus } from '@/models';
+import { OrderCancelledPublisher } from '@/events';
+import { natsWrapper } from '@/nats-wrapper';
 
 const router = express.Router();
 
@@ -24,7 +26,7 @@ router.put(
     const { orderId } = req.params;
 
     // get order from db
-    const order = await Order.findById(orderId);
+    const order = await Order.findById(orderId).populate('ticket');
 
     // check if order exists
     if (!order) {
@@ -46,8 +48,13 @@ router.put(
     order.status = OrderStatus.Cancelled;
     await order.save();
 
-    // publish event
-    // TODO: publish Order Cancelled Event
+    // * Publish Order Cancelled Event
+    await new OrderCancelledPublisher(natsWrapper.client).publish({
+      id: order.id,
+      ticket: {
+        id: order.ticket.id,
+      },
+    });
 
     // send response
     res.status(204).send();

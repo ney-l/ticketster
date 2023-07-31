@@ -2,13 +2,14 @@ import express, { type Request, type Response } from 'express';
 import { ORDERS_API_ENDPOINT } from '@/constants';
 import {
   BadRequestError,
-  NotFoundError,
   OrderStatus,
   requireAuth,
   validate as validateRequest,
 } from '@ticketster/common';
 import { z } from 'zod';
 import { Order, Ticket } from '@/models';
+import { OrderCreatedPublisher } from '@/events';
+import { natsWrapper } from '@/nats-wrapper';
 
 export const ticketRequestSchema = z.object({
   body: z.object({
@@ -54,7 +55,17 @@ router.post(
     });
     await order.save();
 
-    // TODO: Publish an event saying that an order was created
+    // * Publish Order Created event
+    await new OrderCreatedPublisher(natsWrapper.client).publish({
+      id: order.id,
+      status: order.status,
+      userId: order.userId,
+      expiresAt: order.expiresAt.toISOString(),
+      ticket: {
+        id: ticket.id,
+        price: ticket.price,
+      },
+    });
 
     res.status(201).json(order);
   },
