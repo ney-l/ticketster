@@ -1,6 +1,9 @@
+/**
+ * Load environment variables 🌳
+ */
+import 'dotenv/config';
 import express from 'express';
 import 'express-async-errors';
-import dotenv from 'dotenv';
 import { json } from 'body-parser';
 import {
   attachCurrentUser,
@@ -15,11 +18,6 @@ import {
   readOrderRouter,
   updateOrderRouter,
 } from '@/routes';
-
-/**
- * Load environment variables 🌳
- */
-dotenv.config();
 
 const app = express();
 
