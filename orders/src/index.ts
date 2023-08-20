@@ -1,9 +1,8 @@
 import { logger } from '@ticketster/common';
-import { app } from './app';
-import { connectDb } from './db';
-import env from './environments';
-import { connectNats, natsWrapper } from './nats-wrapper';
-
+import { app } from '@/app';
+import { connectDb } from '@/db';
+import env from '@/environments';
+import { connectNats, natsWrapper } from '@/nats-wrapper';
 /**
  * Connect to NATS and DB and start the server 🚀
  */
