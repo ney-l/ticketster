@@ -3,6 +3,8 @@ import { app } from '@/app';
 import { connectDb } from '@/db';
 import env from '@/environments';
 import { connectNats, natsWrapper } from '@/nats-wrapper';
+import { TicketCreatedListener, TicketUpdatedListener } from '@/events';
+
 /**
  * Connect to NATS and DB and start the server 🚀
  */
@@ -22,6 +24,12 @@ const startServer = async () => {
 
   process.on('SIGINT', () => natsWrapper.client.close());
   process.on('SIGTERM', () => natsWrapper.client.close());
+
+  /**
+   * 📡 Listen to events: TicketCreatedEvent and TicketUpdatedEvent
+   */
+  new TicketCreatedListener(natsWrapper.client).listen();
+  new TicketUpdatedListener(natsWrapper.client).listen();
 
   /**
    * Connect to DB
