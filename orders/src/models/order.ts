@@ -23,6 +23,7 @@ interface OrderDoc extends mongoose.Document {
   ticket: TicketDoc;
   createdAt: Date;
   updatedAt: Date;
+  version: number;
 }
 
 /**
