@@ -1,7 +1,8 @@
 {
   "scripts": {
     "dev": "skaffold dev",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "update:common-in-all": "cd auth && npm i @ticketster/common && cd ../orders && npm i @ticketster/common && cd ../tickets && npm i @ticketster/common"
   },
   "devDependencies": {
     "husky": "^8.0.3"
