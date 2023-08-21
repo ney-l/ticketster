@@ -37,5 +37,9 @@ export const connectNats = async () => {
   const { NATS_CLUSTER_ID, NATS_CLIENT_ID, NATS_URL } = env;
   logger.info(`NATS_CLIENT_ID: ${NATS_CLIENT_ID}`);
 
-  await natsWrapper.connect(NATS_CLUSTER_ID, NATS_CLIENT_ID, NATS_URL);
+  try {
+    await natsWrapper.connect(NATS_CLUSTER_ID, NATS_CLIENT_ID, NATS_URL);
+  } catch (err) {
+    logger.error('Could not connect to NATS', err);
+  }
 };
