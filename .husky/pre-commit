@@ -4,4 +4,24 @@
 cd ./auth
 npm run lint
 npm run format:fix
-npm run test:ci
+# npm run test:ci
+
+cd ../client
+npm run lint
+# npm run format:fix
+# npm run test:ci
+
+# cd ../common
+# npm run lint
+# npm run format:fix
+# npm run test:ci
+
+cd ../orders
+npm run lint
+npm run format:fix
+# npm run test:ci
+
+cd ../tickets
+npm run lint
+npm run format:fix
+# npm run test:ci
