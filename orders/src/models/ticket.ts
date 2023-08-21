@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { updateIfCurrentPlugin } from 'mongoose-update-if-current';
 import { Order, OrderStatus } from './order';
 
 /**
@@ -8,11 +9,13 @@ interface TicketAttrs {
   id: string;
   title: string;
   price: number;
+  version: number;
 }
 
 interface TicketDoc extends mongoose.Document {
   title: string;
   price: number;
+  version: number;
   isReserved(): Promise<boolean>;
 }
 
@@ -42,6 +45,18 @@ const ticketSchema = new mongoose.Schema(
     },
   },
 );
+
+/**
+ * Rename the __v field to version
+ */
+ticketSchema.set('versionKey', 'version');
+
+/**
+ * ! This is a plugin that will automatically increment the version number
+ * ! of a document every time it is updated. This is useful for optimistic
+ * ! concurrency control.
+ */
+ticketSchema.plugin(updateIfCurrentPlugin);
 
 ticketSchema.statics.build = (attrs: TicketAttrs) => {
   return new Ticket(attrs);
