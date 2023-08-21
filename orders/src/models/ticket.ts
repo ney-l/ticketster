@@ -5,7 +5,7 @@ import { Order, OrderStatus } from './order';
  * ! Only contains those attributes of Ticket that the Orders Service cares about
  */
 interface TicketAttrs {
-  id: string,
+  id: string;
   title: string;
   price: number;
 }
