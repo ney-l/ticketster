@@ -38,3 +38,30 @@ it('implements optimistic concurrency control', async () => {
     'Unexpected error: An error should have been thrown and this line should not have been executed',
   );
 });
+
+it('increments the version number on each save', async () => {
+  // create ticket
+  const ticket = Ticket.build({
+    title: 'concert',
+    price: 20,
+    userId: '123',
+  });
+
+  // save ticket
+  await ticket.save();
+
+  // expect version to be 0
+  expect(ticket.version).toBe(0);
+
+  // save ticket again
+  await ticket.save();
+
+  // expect version to be 1
+  expect(ticket.version).toBe(1);
+
+  // save ticket again
+  await ticket.save();
+
+  // expect version to be 2
+  expect(ticket.version).toBe(2);
+});
