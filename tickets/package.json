@@ -13,7 +13,7 @@
     "test:ci": "jest --no-cache"
   },
   "dependencies": {
-    "@ticketster/common": "^1.7.0",
+    "@ticketster/common": "^1.9.0",
     "bcrypt": "^5.1.0",
     "body-parser": "^1.20.2",
     "cookie-session": "^2.0.0",
