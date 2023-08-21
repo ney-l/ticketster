@@ -5,5 +5,8 @@
   },
   "devDependencies": {
     "husky": "^8.0.3"
+  },
+  "dependencies": {
+    "mongoose-update-if-current": "^1.4.0"
   }
 }
