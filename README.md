@@ -39,6 +39,21 @@ kubectl get pods
 kubectl exec -it <pod_id> sh
 ```
 
+## Start MongoDB Shell inside a pod
+
+```sh
+# Get the pod id
+kubectl get pods
+
+# start a mongo shell inside the pod
+kubectl exec -it <mongo_pod_id> -- mongosh
+
+# example:
+kubectl exec -it tk-orders-mongo-depl-59cb98d5db-79jd2 -- mongosh
+```
+
+To quit `Ctrl` + `D`
+
 ## Process of adding a new service
 
 1. Create a folder for the microservice in the project directory.
@@ -87,3 +102,11 @@ kubectl port-forward tk-nats-depl-7f59869bb4-55qwj 4222:4222
 - Create a Kubernetes deployment file.
 - Set up file sync options in the `skaffold.yaml` file
 - Set up routing rules in the ingress service.
+
+## MongoDB Commands inside mongo db
+
+Connect to Mongodb using steps outlined above
+`show dbs;`: List all databases
+`use orders;`: Switch to using `orders` db
+`show tables`: Show tables inside the selected db
+`db.tickets.find()`: Show everything inside `tickets` table
