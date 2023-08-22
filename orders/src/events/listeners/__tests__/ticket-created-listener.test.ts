@@ -1,14 +1,21 @@
 import mongoose from 'mongoose';
 import { TicketCreatedListener } from '@/events/listeners';
-import { connectNats, natsWrapper } from '@/nats-wrapper';
+import { natsWrapper } from '@/nats-wrapper';
 import { type TicketCreatedEvent } from '@ticketster/common';
 import { type Message } from 'node-nats-streaming';
 import { Ticket } from '@/models';
 
 const generateMongoId = () => new mongoose.Types.ObjectId().toHexString();
 
+beforeEach(async () => {
+  await natsWrapper.connect();
+});
+
+afterEach(() => {
+  natsWrapper.close();
+});
+
 const setup = async () => {
-  await connectNats();
   // create an instance of the listener
   const listener = new TicketCreatedListener(natsWrapper.client);
   // create a fake data event
