@@ -2,7 +2,7 @@ import { logger } from '@ticketster/common';
 import { app } from '@/app';
 import { connectDb } from '@/db';
 import env from '@/environments';
-import { connectNats, natsWrapper } from '@/nats-wrapper';
+import { natsWrapper } from '@/nats-wrapper';
 import { TicketCreatedListener, TicketUpdatedListener } from '@/events';
 
 /**
@@ -12,12 +12,12 @@ const startServer = async () => {
   /**
    * Connect to NATS
    */
-  await connectNats();
+  await natsWrapper.connect();
 
   /**
    * NATS Graceful shutdown
    */
-  natsWrapper.close();
+  natsWrapper.onClose();
 
   /**
    * 📡 Listen to events: TicketCreatedEvent and TicketUpdatedEvent
