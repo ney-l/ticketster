@@ -17,13 +17,7 @@ const startServer = async () => {
   /**
    * NATS Graceful shutdown
    */
-  natsWrapper.client.on('close', () => {
-    logger.info('NATS connection closed! Exiting process....');
-    process.exit();
-  });
-
-  process.on('SIGINT', () => natsWrapper.client.close());
-  process.on('SIGTERM', () => natsWrapper.client.close());
+  natsWrapper.close();
 
   /**
    * 📡 Listen to events: TicketCreatedEvent and TicketUpdatedEvent
