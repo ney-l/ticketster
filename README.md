@@ -8,6 +8,20 @@ Ticketster, your friendly neighborhood app for buying and selling tickets, invit
 
 Welcome to the Ticketster app - where the buying and selling of tickets comes alive with ease!
 
+![App Mockups](docs/app-mockups.png)
+
+### List of Microservices we are building 🏗️
+
+![List of Microservices](docs/list-of-microservices.png)
+
+### How services are laid out
+
+![Services Layout](docs/services-layout.png)
+
+### List of Events Published
+
+![Events Published](docs/events-published.png)
+
 ## **🔧 Prerequisites**
 
 Before you embark on this thrilling coding adventure, ensure your toolkit is equipped with:
