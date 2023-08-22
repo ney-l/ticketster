@@ -56,4 +56,5 @@ it('acknowledges the message', async () => {
 
   // write assertions to make sure `ack` function was called
   expect(message.ack).toHaveBeenCalled();
+  expect(message.ack).toHaveBeenCalledTimes(1);
 });
