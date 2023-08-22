@@ -34,10 +34,14 @@ export const getCookie = () => {
   return [`session=${base64}`];
 };
 
+export const generateMongoId = () =>
+  new mongoose.Types.ObjectId().toHexString();
+
 export const buildTicket = async () => {
   const ticket = Ticket.build({
     title: faker.lorem.words(3),
     price: Math.floor(Math.random() * 100),
+    id: generateMongoId(),
   });
   await ticket.save();
   return ticket;
