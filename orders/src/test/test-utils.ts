@@ -46,3 +46,15 @@ export const buildTicket = async () => {
   await ticket.save();
   return ticket;
 };
+
+export const buildMockNatsMessage = () => ({
+  ack: jest.fn(),
+  getSubject: jest.fn(),
+  getSequence: jest.fn(),
+  getTimestamp: jest.fn(),
+  getData: jest.fn(),
+  getRawData: jest.fn(),
+  isRedelivered: jest.fn(),
+  getTimestampRaw: jest.fn(),
+  getCrc32: jest.fn(),
+});

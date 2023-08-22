@@ -1,11 +1,9 @@
-import mongoose from 'mongoose';
 import { TicketCreatedListener } from '@/events/listeners';
 import { natsWrapper } from '@/nats-wrapper';
 import { type TicketCreatedEvent } from '@ticketster/common';
-import { type Message } from 'node-nats-streaming';
+import { faker } from '@faker-js/faker';
 import { Ticket } from '@/models';
-
-const generateMongoId = () => new mongoose.Types.ObjectId().toHexString();
+import { buildMockNatsMessage, generateMongoId } from '@/test';
 
 beforeEach(async () => {
   await natsWrapper.connect();
@@ -22,22 +20,13 @@ const setup = async () => {
   const data: TicketCreatedEvent['data'] = {
     id: generateMongoId(),
     version: 0,
-    title: 'concert',
-    price: 10,
+    title: faker.lorem.words(3),
+    price: parseInt(faker.commerce.price()),
     userId: generateMongoId(),
   };
   // create a fake message object
-  const message: Message = {
-    ack: jest.fn(),
-    getSubject: jest.fn(),
-    getSequence: jest.fn(),
-    getTimestamp: jest.fn(),
-    getData: jest.fn(),
-    getRawData: jest.fn(),
-    isRedelivered: jest.fn(),
-    getTimestampRaw: jest.fn(),
-    getCrc32: jest.fn(),
-  };
+  const message = buildMockNatsMessage();
+
   return { listener, data, message };
 };
 
