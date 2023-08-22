@@ -1,112 +1,119 @@
-# About
+# Ticketster 🎟️
 
-Ticketster App that helps users buy and sell tickets
+Welcome aboard the Ticketster Express! 🎟️ 🚀
 
-## Project Requirements
+Ticketster, your friendly neighborhood app for buying and selling tickets, invites you on a journey through its setup, configuration, and best practices. Hang on tight, because here's the inside scoop on how to harness its power!
 
-- Node.js
-- Kubernetes
-- Docker
-- [ingress-nginx](www.kubernetes.github.io/ingress-nginx/deploy)
+## **🎤 About Ticketster**
 
-## Set up
+Welcome to the Ticketster app - where the buying and selling of tickets comes alive with ease!
 
-1. Make sure you have all the project requirements installed.
+## **🔧 Prerequisites**
 
-2. Configure `/etc/hosts`
+Before you embark on this thrilling coding adventure, ensure your toolkit is equipped with:
 
-On the development machine, configure the `/etc/hosts` to map the loopback address to `ticketster.com`
+- **Node.js**: The beating heart of our app.
+- **Kubernetes**: Our orchestration maestro.
+- **Docker**: Keeping our app neatly containerized.
+- **[ingress-nginx](www.kubernetes.github.io/ingress-nginx/deploy)**: The doorway into our Kubernetes domain.
 
-```txt
-127.0.0.1 ticketster.com
-```
+## **⚙️ Setting Up Your Development Environment**
 
-Follow the steps listed here for a guide on how to map a hostname to an IP address.
+1. **Prepare Your Tools**: Have the prerequisites ready and roaring.
 
-[How to Map Hostnames to IP addresses locally](https://gist.github.com/ney-l/e10efa56c1e6bcd17b1b222e4e59e61a)
+2. **Localhost Configuration**:
 
-After configuring the host, kill the Skaffold task if it's already running and restart it.
+   - Tweak `/etc/hosts` to bridge the gap between the loopback address and `ticketster.com`:
 
-Then you should be able to open `http://ticketster.com/api/users/current` in the browser and see a response from the Auth service
+   ```txt
+     127.0.0.1 ticketster.com
+   ```
 
-## Start Shell inside a pod
+   - Not sure how? Follow this handy [guide](https://gist.github.com/ney-l/e10efa56c1e6bcd17b1b222e4e59e61a) to map hostnames to IP addresses.
+   - Freshen things up by restarting any running Skaffold tasks.
+   - Give it a whirl! Open `http://ticketster.com/api/users/current` in your browser, and you should be greeted by the Auth service.
 
-```sh
-# Get the pod id
-kubectl get pods
+## **🚀 Dive Deep into Kubernetes Pods**
 
-# start a shell inside the pod
-kubectl exec -it <pod_id> sh
-```
+- **Basic Shell Access**:
 
-## Start MongoDB Shell inside a pod
+  ```sh
+  # Discover the magic ID of your pod
+  kubectl get pods
 
-```sh
-# Get the pod id
-kubectl get pods
+  # Step inside for a closer look
+  kubectl exec -it <pod_id> sh
+  ```
 
-# start a mongo shell inside the pod
-kubectl exec -it <mongo_pod_id> -- mongosh
+- **For MongoDB Aficionados**:
 
-# example:
-kubectl exec -it tk-orders-mongo-depl-59cb98d5db-79jd2 -- mongosh
-```
+  ```sh
+  # Locate your MongoDB pod ID
+  kubectl get pods
 
-To quit `Ctrl` + `D`
+  # Step inside the world of MongoDB
+  kubectl exec -it <mongo_pod_id> -- mongosh
+  ```
 
-## Process of adding a new service
+  Dive out with a swift `Ctrl` + `D#`.
 
-1. Create a folder for the microservice in the project directory.
-2. Create package.json, install dependencies
-3. Write Dockerfile and .dockerignore
-4. Create `index.ts`` to run project
-5. Build image, push to docker h ub
-6. Write k8s file for deployment, service
-7. If the microservice requires environment variables, then create a secret object for it
-8. Update `skaffold.yaml` to do file sync for the new microservice
-9. If the new microservice needs a DB then write k8s file for Mongodb? deployment, service
+## **🌱 Cultivating New Services**
 
-## Environment Variables
+Follow these steps to plant a new microservice in the Ticketster garden:
 
-The environment variables are stored in `./<service-name>/.env` file. `<service-name>` Service Deployment file `infra/k8s/<service-name>-depl.yaml` is set up to read the secret from `<service-name>-secret-env-variables`. But you have to inject these secrets by running the below command.
+1. Designate a new folder for your sprouting microservice.
+2. Set up `package.json` and shower it with dependencies.
+3. Fashion a Dockerfile and its sidekick, `.dockerignore`.
+4. Craft `index.ts` as the heartbeat of your project.
+5. Build the Docker image and send it off into the wide world of Docker Hub.
+6. Write the Kubernetes manifest for deployment and service.
+7. If your service has secrets, conjure a secret object.
+8. Let `skaffold.yaml` know about your new addition.
+9. Does your service need a database companion? Write the Kubernetes manifest for a MongoDB deployment and service.
 
-When the project is first set up, run the below command to inject environment variables from `.env` file into the pod
+## **🌍 Environment Variables & Secrets**
 
-```sh
-kubectl create secret generic <service-name>-secret-env-variables --from-env-file=.env
-```
+Your microservice's environment variables cozy up inside the `./<service-name>/.env` file. But, the Kubernetes dance requires a few steps:
 
-Every time the `.env` file is updated, you have to delete the `<service-name>-secret-env-variables` and recreate it.
+1. Inject secrets from `.env` into your pod:
 
-```sh
-# Get the Secret
-kubectl delete secret <service-name>-secret-env-variables
+   ```sh
+   kubectl create secret generic <service-name>-secret-env-variables --from-env-file=.env
+   ```
 
-kubectl create secret generic <service-name>-secret-env-variables --from-env-file=.env
-```
+2. Updated `.env`? Refresh your secrets:
 
-## Set up Port Forwarding
+   ```sh
+   kubectl delete secret <service-name>-secret-env-variables
+   kubectl create secret generic <service-name>-secret-env-variables --from-env-file=.env
+   ```
+
+## **🚪 Port Forwarding Fun**
+
+Create magical tunnels between your machine and the pod:
 
 ```sh
 kubectl port-forward <pod-id> <port>:<port-on-the-pod>
-
-# Example
-kubectl port-forward tk-nats-depl-7f59869bb4-55qwj 4222:4222
 ```
 
-## Some guidelines for adding a new Micro service
+## **✨ Guidelines for Microservice Mastery**
 
-- Duplicate an existing microservice for a quick skaffold.
-- Install dependencies.
-- Build a docker image of the new microservice.
-- Create a Kubernetes deployment file.
-- Set up file sync options in the `skaffold.yaml` file
-- Set up routing rules in the ingress service.
+- Replicate an existing microservice for a rapid launch.
+- Replenish with the necessary dependencies.
+- Craft a Docker image of your microservice masterpiece.
+- Architect a Kubernetes deployment file.
+- Synchronize with `skaffold.yaml`.
+- Set up ingress rules like a pro.
 
-## MongoDB Commands inside mongo db
+## **📚 MongoDB Command Cheat Sheet**
 
-Connect to Mongodb using steps outlined above
-`show dbs;`: List all databases
-`use orders;`: Switch to using `orders` db
-`show tables`: Show tables inside the selected db
-`db.tickets.find()`: Show everything inside `tickets` table
+Once inside MongoDB (see the steps above):
+
+- `show dbs;`: List all databases
+- `use orders;`: Switch to using `orders` db
+- `show tables`: Show tables inside the selected db
+- `db.tickets.find()`: Show everything inside `tickets` table
+
+---
+
+Happy coding, fellow Ticketster! 🎟️🎉🚀
